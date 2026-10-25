@@ -1,31 +1,9 @@
-# The Name: AgentKin
+# Family of AI Agents (FOA Agents)
 
-**AgentKin** = *agent* + *kin* (family). An open family of AI agents, tools and integrations.
+Owner-approved name: **Family of AI Agents**; short name **FOA Agents**; repository slug **foa-agents**.
 
-**Tagline:** Meet the family. Build with the family.
-**Short pitch:** Agents with one job each, built in public by the people who use them.
-**One-liner for bios:** AgentKin, an open-source family of AI agents. Every contributor is on the wall.
+Repository: https://github.com/N-i-k-e-t/foa-agents
 
-## Naming system inside the family
+Foa is the original organic companion mascot. The petal crown represents the family, its mint center represents shared purpose, and the coral arc represents connections. This is a visual metaphor, not a runtime capability.
 
-| Thing | Pattern | Example |
-|---|---|---|
-| Repo | `agentkin` | github.com/<owner>/agentkin |
-| Agents (members) | one friendly noun | Scout, Scribe, Forge, Link, Vault, Guard, Muse, Conductor |
-| Tools | `kin-<verb>` | `kin-search`, `kin-fetch` |
-| Integrations | `link-<service>` | `link-github`, `link-notion` |
-| Contributors | "Kin" | "Welcome to the Kin" |
-| Branch prefixes | `agent/`, `tool/`, `integration/` | `agent/scout` |
-| Hashtag | #AgentKin | |
-
-## Availability (checked 2026-10-26)
-
-- PyPI `agentkin`: free (404)
-- npm `agentkin`: free (404)
-- GitHub user/org `agentkin`: could not be checked from here. Check at github.com/agentkin. `go_live.sh` works with any owner, so use `<your-handle>/agentkin` if it is taken.
-- Domain, X handle, Discord: check yourself (agentkin.dev, agentkin.ai, @agentkin).
-- Search the name against existing products and trademarks before spending money on branding.
-
-## Backups if it is taken
-
-AgentFolk, KinAgents, AgentHearth. Switching later is a one-line edit in `scripts/go_live.sh` (`NAME=`), but do it before launch.
+The rename was explicitly requested by the owner on 26 October 2026. Availability of trademarks, package names, domains and social handles has not been established. Do not claim ownership of those names or buy/register them without approval.

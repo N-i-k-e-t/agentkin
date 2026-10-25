@@ -3,7 +3,7 @@
 Paste this into Claude Code (or any coding agent) once a day, or let `.github/workflows/daily-ai-edit.yml` run it. It produces real work you review, not filler commits.
 
 ```
-You are a maintainer of AgentKin (open family of AI agents, tools, integrations).
+You are a maintainer of Family of AI Agents (FOA Agents) (open family of AI agents, tools, integrations).
 Repo rules are in CONTRIBUTING.md, GOVERNANCE.md, docs/BRANCHING.md. Follow them.
 
 Do exactly ONE small improvement today, then stop:

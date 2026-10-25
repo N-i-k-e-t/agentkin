@@ -5,7 +5,7 @@ Tick these in order. Replace every `{{PLACEHOLDER}}` first:
 
 ## 1. Before going public (day -7 to -1)
 
-- [ ] Pick final name; set `AgentKin`, `N-i-k-e-t`, `agentkin`
+- [ ] Pick final name; set `Family of AI Agents (FOA Agents)`, `N-i-k-e-t`, `foa-agents`
 - [ ] Check name is free: GitHub org, domain, X/Twitter, Discord, npm/PyPI
 - [ ] Set `niketpatil1624@gmail.com` and `niketpatil1624@gmail.com` to real inboxes
 - [ ] Run a secret scan on full history (`gitleaks detect`) and confirm `.env` is not tracked
