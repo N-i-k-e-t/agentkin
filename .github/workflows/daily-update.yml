@@ -45,7 +45,7 @@ jobs:
           '
       - name: Commit and push
         run: |
-          git config user.name  "agentkin-bot"
+          git config user.name  "foa-agents-bot"
           git config user.email "bot@users.noreply.github.com"
           git add history.json
           git diff --cached --quiet || git commit -m "chore(data): daily snapshot $(date -u +%F)"
