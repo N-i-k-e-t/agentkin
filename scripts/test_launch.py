@@ -17,7 +17,7 @@ class LaunchTests(unittest.TestCase):
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
 
     def run_launch(self, *extra):
-        return subprocess.run(['bash', 'scripts/go_live.sh', 'N-i-k-e-t', 'agentkin',
+        return subprocess.run(['bash', 'scripts/go_live.sh', 'N-i-k-e-t', 'foa-agents',
                                'security@fixture.test', 'conduct@fixture.test', *extra],
                               cwd=self.root, capture_output=True, text=True)
 
@@ -51,7 +51,7 @@ class LaunchTests(unittest.TestCase):
 
     def test_placeholders_rejected(self):
         result = subprocess.run(['python3', 'scripts/launch_preflight.py', '<OWNER>',
-                                 'agentkin', '<EMAIL>', '<EMAIL>'], cwd=self.root,
+                                 'foa-agents', '<EMAIL>', '<EMAIL>'], cwd=self.root,
                                 capture_output=True)
         self.assertNotEqual(result.returncode, 0)
 
@@ -60,7 +60,7 @@ class LaunchTests(unittest.TestCase):
         (self.root / 'SECURITY.md').write_text('Report by email {{SECURITY_EMAIL}}.\n')
         (self.root / '.github' / 'CODEOWNERS').write_text('* @{{ORG}}/core\n')
         subprocess.run(['python3', 'scripts/launch_preflight.py', 'N-i-k-e-t',
-                        'agentkin', 'security@fixture.test', 'conduct@fixture.test', '--render'],
+                        'foa-agents', 'security@fixture.test', 'conduct@fixture.test', '--render'],
                        cwd=self.root, check=True, capture_output=True)
         self.assertIn('email security@fixture.test', (self.root / 'SECURITY.md').read_text())
         self.assertIn('@N-i-k-e-t', (self.root / '.github' / 'CODEOWNERS').read_text())

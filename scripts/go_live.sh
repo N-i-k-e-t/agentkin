@@ -8,7 +8,7 @@
 # Usage:
 #   ./scripts/go_live.sh <owner> <repo> <security-email> <conduct-email> [--dry-run]
 # Example:
-#   ./scripts/go_live.sh my-handle agentkin me@example.com me@example.com
+#   ./scripts/go_live.sh my-handle foa-agents me@example.com me@example.com
 set -euo pipefail
 
 OWNER="${1:?owner (GitHub user or org)}"
@@ -17,7 +17,7 @@ SEC_EMAIL="${3:?security email}"
 CONDUCT_EMAIL="${4:?conduct email}"
 DRY="${5:-}"
 FULL="$OWNER/$REPO"
-NAME="AgentKin"
+NAME="Family of AI Agents (FOA Agents)"
 
 run() { if [ "$DRY" = "--dry-run" ]; then echo "[dry-run] $*"; else "$@"; fi; }
 say() { printf "\n==> %s\n" "$*"; }
@@ -122,7 +122,7 @@ say "10. Daily data branch (unprotected, bot-only snapshots)"
 if ! git ls-remote --exit-code --heads origin data >/dev/null 2>&1; then
   tmp="$(mktemp -d)"; git worktree add -q --detach "$tmp" HEAD
   ( cd "$tmp" && git checkout -q --orphan data && git rm -rq -f . && echo '[]' > history.json \
-    && git add history.json && git -c user.name=agentkin-bot -c user.email=bot@users.noreply.github.com commit -q -s -m "chore(data): init history" \
+    && git add history.json && git -c user.name=foa-agents-bot -c user.email=bot@users.noreply.github.com commit -q -s -m "chore(data): init history" \
     && run git push -q origin data )
   git worktree remove --force "$tmp"
 fi

@@ -50,8 +50,8 @@ def main():
     args = parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?', args.owner):
         raise ValueError('Supply a real GitHub owner handle')
-    if args.repo != 'agentkin':
-        raise ValueError('Project repository name must stay agentkin')
+    if args.repo != 'foa-agents':
+        raise ValueError('Project repository name must stay foa-agents')
     for email in (args.security_email, args.conduct_email):
         if not re.fullmatch(r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", email):
             raise ValueError('Supply both real security and conduct email addresses')
@@ -62,14 +62,14 @@ def main():
     if not args.render:
         return
     replacements = {
-        '{{PROJECT_NAME}}': 'AgentKin', '{{ORG}}': args.owner, '{{REPO}}': args.repo,
+        '{{PROJECT_NAME}}': 'Family of AI Agents (FOA Agents)', '{{ORG}}': args.owner, '{{REPO}}': args.repo,
         '{{SECURITY_EMAIL}}': args.security_email, '{{CONDUCT_EMAIL}}': args.conduct_email,
         '{{REPO_URL}}': f'https://github.com/{args.owner}/{args.repo}',
         '{{SITE_URL}}': f'https://{args.owner}.github.io/{args.repo}/',
     }
     # Protected policy templates are filled only with explicitly supplied launch inputs.
     for p in files():
-        if p.suffix not in {'.md', '.html'} and p.name != 'CODEOWNERS':
+        if p.suffix not in {'.md', '.html'} and p.name not in {'CODEOWNERS', 'LICENSE'}:
             continue
         text = p.read_text()
         for old, new in replacements.items():
