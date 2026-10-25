@@ -1,0 +1,10 @@
+Add a web-search tool with a mock|good-first-issue,type:tool,approved-to-build|Create tools/web-search with tool.yaml, a mock response set and tests that need no real key. Follow docs/BRANCHING.md and use branch tool/web-search.
+Add a summarizer example agent|good-first-issue,type:agent,approved-to-build|Copy agents/_template to agents/scribe, fill agent.yaml, add a runnable example using a mocked model. Branch agent/scribe.
+Add a GitHub integration (read issues) with mock|good-first-issue,type:integration,approved-to-build|Copy integrations/_template to integrations/github. Read GITHUB_TOKEN from the environment only. Ship mock/ and tests/.
+Validate agent.yaml in CI|good-first-issue,help-wanted,approved-to-build|Add a script that checks every agents/*/agent.yaml has the required fields and wire it into .github/workflows/ci.yml.
+Add a new-agent CLI scaffolder|help-wanted,approved-to-build|A small command that copies agents/_template and fills the name. Node or Python, no heavy dependencies.
+Landing page: light and dark toggle|good-first-issue,type:docs,approved-to-build|docs/index.html already follows system theme. Add a manual toggle that remembers the choice.
+Draw the first family member (SVG)|good-first-issue,type:docs,approved-to-build|Pick a character from docs/CHARACTER_BIBLE.md and draw it as SVG following the style rules. Add it under docs/assets/ and credit yourself.
+Add a public-domain sample dataset for evals|good-first-issue,help-wanted,approved-to-build|Add a small dataset under data/samples/ with a README stating source and license.
+Translate README into another language|good-first-issue,type:docs,approved-to-build|Add README.<lang>.md and link it from README.md.
+Write the architecture diagram|good-first-issue,type:docs,approved-to-build|Draw integration -> tool -> agent flow as SVG (see docs/BRANCHING.md) and embed it in README.md.
