@@ -1,0 +1,25 @@
+# Copy this folder to agents/<your-agent-name>/ and fill in every field.
+name: your-agent-name
+display_name: Your Agent
+role: one sentence, one job
+character: path to character art or short description
+version: 0.1.0
+owner: your-github-handle
+model_requirements:
+  min_context: 8000
+  tool_use: true
+inputs:
+  - name: task
+    type: string
+outputs:
+  - name: result
+    type: string
+tools:            # tools from tools/ this agent may call
+  - none
+integrations:     # integrations from integrations/ it needs
+  - none
+env_keys:         # key NAMES only, must also be listed in .env.example
+  - LLM_API_KEY
+hands_off_to:     # other family agents it can pass work to
+  - none
+tests: tests/
