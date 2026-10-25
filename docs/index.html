@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentKin</title>
+<meta name="description" content="An open family of AI agents, tools and integrations, built in public.">
+<style>
+  :root{
+    --bg:#FFF6E5; --ink:#1B1F3B; --muted:#5b5f7a; --card:#ffffff; --line:#e8dcc3;
+    --coral:#FF6B5E; --sun:#FFC145; --mint:#3DDC97; --sky:#4DA8FF; --violet:#8B6CFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14162b; --ink:#f4efe3; --muted:#a6a9c4; --card:#1d2040; --line:#2e3258; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  a{color:inherit}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  header.nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:20px}
+  .btn{display:inline-block;padding:10px 18px;border-radius:999px;border:2px solid var(--ink);font-weight:700;text-decoration:none;background:var(--sun);color:#1B1F3B}
+  .btn.alt{background:transparent;color:var(--ink)}
+  .hero{padding:48px 0 28px;text-align:center}
+  .hero h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:0 0 14px;letter-spacing:-.03em}
+  .hero p{max-width:620px;margin:0 auto 24px;color:var(--muted);font-size:18px}
+  .family{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:26px 0 8px}
+  .blob{width:54px;height:54px;border:3px solid var(--ink);display:grid;place-items:center;font-weight:800;color:#1B1F3B}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:34px 0}
+  .stat{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:16px;text-align:center}
+  .stat b{display:block;font-size:34px;letter-spacing:-.02em}
+  .stat span{color:var(--muted);font-size:14px}
+  section{margin:44px 0}
+  h2{font-size:26px;letter-spacing:-.02em;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 16px}
+  .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:16px}
+  .wall{display:flex;flex-wrap:wrap;gap:10px}
+  .person{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 12px 4px 4px;text-decoration:none;font-size:14px}
+  .person img{width:32px;height:32px;border-radius:50%}
+  .person small{color:var(--muted)}
+  ul.feed{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  ul.feed li{display:flex;gap:10px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 12px}
+  ul.feed img{width:28px;height:28px;border-radius:50%}
+  ul.feed a{text-decoration:none;font-weight:600}
+  ul.feed time{margin-left:auto;color:var(--muted);font-size:13px;white-space:nowrap}
+  .steps{counter-reset:s;display:grid;gap:10px}
+  .steps div{counter-increment:s;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 14px 12px 52px;position:relative}
+  .steps div:before{content:counter(s);position:absolute;left:12px;top:10px;width:28px;height:28px;border-radius:50%;background:var(--violet);color:#fff;display:grid;place-items:center;font-weight:800}
+  .empty{color:var(--muted);padding:12px 0}
+  footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <div class="brand">AgentKin</div>
+    <a class="btn" id="repoLink" href="https://github.com/N-i-k-e-t/agentkin">View on GitHub</a>
+  </header>
+
+  <div class="hero">
+    <h1>An open family of AI agents. Built in public.</h1>
+    <p>Agents, tools and integrations made by the people who use them. Merge a PR and your name goes live on this page.</p>
+    <a class="btn" id="joinLink" href="https://github.com/N-i-k-e-t/agentkin/issues?q=label%3Agood-first-issue">Pick a good first issue</a>
+    <a class="btn alt" href="https://github.com/N-i-k-e-t/agentkin/blob/main/CONTRIBUTING.md">How to contribute</a>
+    <div class="family" aria-hidden="true">
+      <div class="blob" style="background:var(--sky);border-radius:50%">S</div>
+      <div class="blob" style="background:var(--sun);border-radius:14px">W</div>
+      <div class="blob" style="background:var(--coral);clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%)">F</div>
+      <div class="blob" style="background:var(--mint);border-radius:999px">L</div>
+      <div class="blob" style="background:var(--violet);border-radius:12px 12px 22px 22px">V</div>
+      <div class="blob" style="background:var(--coral);border-radius:6px 6px 50% 50%">G</div>
+      <div class="blob" style="background:var(--sun);border-radius:50% 50% 40% 60%">M</div>
+      <div class="blob" style="background:var(--mint);clip-path:polygon(50% 5%,100% 95%,0 95%)">C</div>
+    </div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><b id="sStars">-</b><span>stars</span></div>
+    <div class="stat"><b id="sContribs">-</b><span>contributors</span></div>
+    <div class="stat"><b id="sPrs">-</b><span>PRs merged recently</span></div>
+    <div class="stat"><b id="sOpen">-</b><span>PRs in review</span></div>
+    <div class="stat"><b id="sForks">-</b><span>forks</span></div>
+  </div>
+
+  <section>
+    <h2>The family</h2>
+    <p class="sub">Four kinds of things live here.</p>
+    <div class="grid4">
+      <div class="card"><b>Agents</b><br>Family members, one job each.</div>
+      <div class="card"><b>Tools</b><br>Reusable abilities agents call.</div>
+      <div class="card"><b>Integrations</b><br>Connections to services, APIs, keys and data.</div>
+      <div class="card"><b>Data</b><br>Sample sets, evals, prompts.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Contributor wall</h2>
+    <p class="sub">Everyone who has commits in the repo. Updated hourly.</p>
+    <div class="wall" id="contribs"><div class="empty">Be the first name here.</div></div>
+  </section>
+
+  <section>
+    <h2>Star wall</h2>
+    <p class="sub">Thank you to our latest stargazers.</p>
+    <div class="wall" id="stars"><div class="empty">No stars yet. Be the first.</div></div>
+  </section>
+
+  <section>
+    <h2>Live commits</h2>
+    <p class="sub">What people are building right now.</p>
+    <ul class="feed" id="commits"><li class="empty">Waiting for the first commit.</li></ul>
+  </section>
+
+  <section>
+    <h2>Recently merged</h2>
+    <ul class="feed" id="prs"><li class="empty">Nothing merged yet.</li></ul>
+  </section>
+
+  <section>
+    <h2>How you join</h2>
+    <div class="steps">
+      <div>Open an issue with your idea (agent, tool or integration).</div>
+      <div>Get the <b>approved-to-build</b> label, then branch from <b>develop</b>.</div>
+      <div>Open a PR. Checks run, a maintainer reviews within 48 hours.</div>
+      <div>Merge. Your name, avatar and commits appear above.</div>
+    </div>
+  </section>
+
+  <footer>
+    MIT licensed. <span id="updated"></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function safeUrl(u){ return /^https:\/\//.test(u) ? u : "#"; }
+  function ago(iso){
+    var s = Math.max(1, (Date.now() - new Date(iso).getTime()) / 1000);
+    var u = [["d",86400],["h",3600],["m",60]];
+    for (var i = 0; i < u.length; i++) if (s >= u[i][1]) return Math.floor(s / u[i][1]) + u[i][0] + " ago";
+    return "just now";
+  }
+  function person(p, extra){
+    return '<a class="person" href="' + esc(safeUrl(p.url)) + '" rel="noopener"><img src="' + esc(p.avatar) + '" alt="" loading="lazy">' +
+           '<span>' + esc(p.login) + (extra ? ' <small>' + esc(extra) + '</small>' : '') + '</span></a>';
+  }
+  function row(img, href, text, when){
+    return '<li>' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : '') +
+           '<a href="' + esc(safeUrl(href)) + '" rel="noopener">' + esc(text) + '</a><time>' + esc(when) + '</time></li>';
+  }
+
+  fetch("data/stats.json", { cache: "no-store" })
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){
+      $("sStars").textContent = d.stars;
+      $("sContribs").textContent = d.contributors_count;
+      $("sPrs").textContent = (d.merged_prs || []).length;
+      $("sOpen").textContent = d.open_prs;
+      $("sForks").textContent = d.forks;
+
+      if (d.repo) {
+        $("repoLink").href = "https://github.com/" + d.repo;
+        $("joinLink").href = "https://github.com/" + d.repo + "/issues?q=label%3Agood-first-issue";
+      }
+      if (d.contributors && d.contributors.length)
+        $("contribs").innerHTML = d.contributors.map(function(p){ return person(p, p.contributions + " commits"); }).join("");
+      if (d.recent_stars && d.recent_stars.length)
+        $("stars").innerHTML = d.recent_stars.map(function(p){ return person(p, ""); }).join("");
+      if (d.recent_commits && d.recent_commits.length)
+        $("commits").innerHTML = d.recent_commits.map(function(c){ return row(c.avatar, c.url, c.author + ": " + c.message, ago(c.date)); }).join("");
+      if (d.merged_prs && d.merged_prs.length)
+        $("prs").innerHTML = d.merged_prs.map(function(p){ return row(p.avatar, p.url, "#" + p.number + " " + p.title + " by " + p.author, ago(p.merged_at)); }).join("");
+      if (d.generated_at) $("updated").textContent = "Live data updated " + ago(d.generated_at) + ".";
+    })
+    .catch(function(){ $("updated").textContent = "Live data will appear after the first site build."; });
+})();
+</script>
+</body>
+</html>
