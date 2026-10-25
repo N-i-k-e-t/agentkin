@@ -1,0 +1,49 @@
+name: weekly-digest
+
+on:
+  schedule:
+    - cron: "30 3 * * 1"      # Monday 09:00 IST
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: read
+  contents: read
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post weekly digest issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const since = new Date(Date.now() - 7 * 864e5).toISOString();
+            const fiveDays = Date.now() - 5 * 864e5;
+
+            const open = await github.paginate(github.rest.pulls.list, { owner, repo, state: "open", per_page: 100 });
+            const waiting = open.filter(p => new Date(p.updated_at).getTime() < fiveDays);
+
+            const closed = await github.paginate(github.rest.pulls.list, { owner, repo, state: "closed", per_page: 100, sort: "updated", direction: "desc" });
+            const merged = closed.filter(p => p.merged_at && p.merged_at > since);
+            const firstTimers = [...new Set(merged.filter(p => p.author_association === "FIRST_TIME_CONTRIBUTOR" || p.author_association === "FIRST_TIMER").map(p => "@" + p.user.login))];
+
+            const { data: r } = await github.rest.repos.get({ owner, repo });
+
+            const body = [
+              `## Weekly digest (${new Date().toISOString().slice(0,10)})`,
+              ``,
+              `**Stars:** ${r.stargazers_count}  |  **Forks:** ${r.forks_count}  |  **Open PRs:** ${open.length}  |  **Merged this week:** ${merged.length}`,
+              ``,
+              `### PRs waiting more than 5 days`,
+              waiting.length ? waiting.map(p => `- #${p.number} ${p.title} (@${p.user.login})`).join("\n") : "- none",
+              ``,
+              `### New contributors to welcome`,
+              firstTimers.length ? firstTimers.join(", ") : "- none this week",
+              ``,
+              `### Merged this week`,
+              merged.length ? merged.map(p => `- #${p.number} ${p.title} (@${p.user.login})`).join("\n") : "- none",
+            ].join("\n");
+
+            await github.rest.issues.create({ owner, repo, title: `Weekly digest ${new Date().toISOString().slice(0,10)}`, body, labels: ["digest"] });

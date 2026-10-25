@@ -1,0 +1,38 @@
+name: daily-ai-edit
+
+# OPTIONAL. Disabled until you add the secret ANTHROPIC_API_KEY and uncomment the schedule.
+# Each run does ONE small, real improvement from docs/DAILY_PROMPT.md and opens a PR into
+# `develop` for a human to review. It never pushes directly and never merges itself.
+# Check the current inputs in the action's README before enabling:
+# https://github.com/anthropics/claude-code-action
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 1 * * *"       # 06:30 IST daily
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+  id-token: write
+
+jobs:
+  edit:
+    if: ${{ vars.ENABLE_AI_DAILY == 'true' }}   # set repo variable ENABLE_AI_DAILY=true to turn on
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+      - name: Read daily prompt
+        id: p
+        run: |
+          {
+            echo 'prompt<<EOF'
+            cat docs/DAILY_PROMPT.md
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: ${{ steps.p.outputs.prompt }}

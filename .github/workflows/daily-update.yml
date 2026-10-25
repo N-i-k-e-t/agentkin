@@ -1,0 +1,52 @@
+name: daily-update
+
+# Real, honest automation: once a day, record a snapshot of the project's growth
+# (stars, forks, contributors, open PRs) on the unprotected `data` branch.
+# It is committed by a bot, is clearly labeled as such, and never touches `main`/`develop`.
+on:
+  schedule:
+    - cron: "30 0 * * *"      # 06:00 IST every day
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: data
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+          path: src
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build stats
+        working-directory: src
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/build_stats.mjs
+      - name: Append today's snapshot
+        run: |
+          node -e '
+            const fs = require("fs");
+            const s = JSON.parse(fs.readFileSync("src/docs/data/stats.json", "utf8"));
+            const h = JSON.parse(fs.readFileSync("history.json", "utf8"));
+            const day = new Date().toISOString().slice(0, 10);
+            const row = { date: day, stars: s.stars, forks: s.forks, contributors: s.contributors_count, open_prs: s.open_prs };
+            const i = h.findIndex(r => r.date === day);
+            if (i >= 0) h[i] = row; else h.push(row);
+            fs.writeFileSync("history.json", JSON.stringify(h, null, 2) + "\n");
+          '
+      - name: Commit and push
+        run: |
+          git config user.name  "agentkin-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add history.json
+          git diff --cached --quiet || git commit -m "chore(data): daily snapshot $(date -u +%F)"
+          git push origin data

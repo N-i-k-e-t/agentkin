@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan for committed secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: No .env committed
+        run: |
+          if git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env\.example$'; then
+            echo "A .env file is tracked. Remove it and rotate its keys."; exit 1
+          fi
+      - name: Every key used is listed in .env.example
+        run: |
+          missing=0
+          for k in $(grep -rhoE 'process\.env\.[A-Z0-9_]+|os\.environ(\.get)?\(?\[?["'"'"'][A-Z0-9_]+' agents tools integrations 2>/dev/null | grep -oE '[A-Z][A-Z0-9_]{2,}$' | sort -u); do
+            grep -q "^$k=" .env.example || { echo "Add $k to .env.example"; missing=1; }
+          done
+          exit $missing
+      - name: Each agent/tool/integration has its yaml and README
+        run: |
+          for d in agents/*/ integrations/*/; do
+            case "$d" in *_template*) continue;; esac
+            [ -f "$d/README.md" ] || { echo "$d missing README.md"; exit 1; }
+            ls "$d"*.yaml >/dev/null 2>&1 || { echo "$d missing yaml contract"; exit 1; }
+          done
+      - name: Sign-off present on commits
+        run: |
+          for commit in $(git rev-list "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"); do
+            git show -s --format=%B "$commit" | grep -q '^Signed-off-by: .\+ <.\+>$' \
+              || { echo "Commit $commit needs git commit -s"; exit 1; }
+          done
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Launch regression tests
+        run: python3 -m unittest discover -s scripts -p 'test_launch.py' -v
