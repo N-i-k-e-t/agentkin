@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /
+# Draft: run scripts/configure_site.py with the verified production origin before publishing.
