@@ -1,0 +1,21 @@
+# Copy this folder to integrations/<service>/ and fill in every field.
+name: service-name
+version: 0.1.0
+owner: your-github-handle
+description: one sentence
+auth:
+  type: api_key            # api_key | oauth | none
+  env_keys:                # NAMES only; also add to .env.example
+    - SERVICE_API_KEY
+rate_limit:
+  requests_per_minute: 60
+  retry: exponential
+data_access:
+  reads: []                # what it reads from the service
+  writes: []               # what it writes (be explicit)
+  stores_personal_data: false
+tools_provided:            # tools in tools/ that use this integration
+  - none
+mock: mock/                # fake responses so tests need no real key
+tests: tests/
+docs_link: https://example.com/api-docs
