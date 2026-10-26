@@ -1,0 +1,15 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {buildStats} from '../lib/stats.ts';
+import {GET,POST} from '../api/stats.ts';
+const repo={stargazers_count:7,forks_count:2,open_issues_count:3};
+const person={type:'User',login:'fixture-user',avatar_url:'https://avatars.githubusercontent.com/u/1',html_url:'https://github.com/fixture-user',contributions:2};
+const commit={sha:'abcdef0123',commit:{message:'fix: a real fixture\nbody',author:{date:'2026-10-26T00:00:00Z'}},author:{login:'fixture-user'},html_url:'https://github.com/N-i-k-e-t/foa-agents/commit/abcdef0123'};
+const mock=(url)=>Promise.resolve(Response.json(String(url).includes('contributors')?[person]:String(url).includes('/commits')?[commit]:repo));
+test('maps fixed-repository GitHub data without invented totals',async()=>{const calls=[];const data=await buildStats((url,init)=>{calls.push([String(url),init]);return mock(url)},()=>new Date('2026-10-26T00:00:00Z'));assert.equal(data.counts.stars,7);assert.equal(data.contributors[0].login,'fixture-user');assert.equal(data.commits[0].message,'fix: a real fixture');assert.equal(data.partial,false);assert.ok(calls.every(([url])=>url.startsWith('https://api.github.com/repos/N-i-k-e-t/foa-agents')));});
+test('upstream failure cannot become a fake zero count',async()=>{await assert.rejects(buildStats(()=>Promise.resolve(new Response('',{status:403}))));});
+test('optional feed failure preserves real counts and flags partial response',async()=>{const data=await buildStats(url=>String(url).includes('?')?Promise.resolve(new Response('',{status:503})):mock(url));assert.equal(data.counts.stars,7);assert.equal(data.partial,true);assert.deepEqual(data.contributors,[]);});
+test('unsafe feed URLs are excluded',async()=>{const data=await buildStats(url=>String(url).includes('contributors')?Promise.resolve(Response.json([{...person,html_url:'https://evil.test/'}])):mock(url));assert.deepEqual(data.contributors,[]);assert.equal(data.partial,true);});
+test('invalid upstream counts are rejected',async()=>{await assert.rejects(buildStats(url=>String(url).includes('?')?mock(url):Promise.resolve(Response.json({...repo,stargazers_count:-1}))));});
+test('handler exposes cache policy and read-only errors',async()=>{const original=globalThis.fetch;globalThis.fetch=mock;try{const response=await GET(new Request('https://fixture.test/api/stats'));assert.equal(response.status,200);assert.match(response.headers.get('Vercel-CDN-Cache-Control'),/s-maxage=300/);assert.equal((await response.json()).counts.stars,7);assert.equal(POST().status,405);}finally{globalThis.fetch=original;}});
+test('handler returns explicit unavailable response on GitHub outage',async()=>{const original=globalThis.fetch;globalThis.fetch=()=>Promise.reject(new Error('offline'));try{const response=await GET(new Request('https://fixture.test/api/stats'));assert.equal(response.status,503);assert.equal((await response.json()).status,'unavailable');assert.equal(response.headers.get('Cache-Control'),'no-store');}finally{globalThis.fetch=original;}});
