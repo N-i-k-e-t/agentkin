@@ -2,13 +2,13 @@
 
 ## Source and scope
 
-Deploy `site/` as a static website. There is no backend, database, paid model call, secret or install step. Preview locally with `python3 -m http.server 8000 --directory site`. Source and proposed launch changes live on `docs/foa-launch`; human review is required before merging into develop or releasing to main.
+Deploy `site/` as a static website. The presentation is static, with a read-only TypeScript stats Function. No database or paid model is used. Install with `npm --prefix site ci`, build with `npm run build` and preview both layers with `npm run dev`. Source and proposed launch changes live on `docs/foa-launch`; human review is required before merging into develop or releasing to main.
 
 ## Vercel settings
 
 - Team verified by the connector: `niket-main` (Hobby), ID `team_pSkdTdKbm1k9mDrLUlyWuPXO`.
 - Intended NEW project: `foa-agents`. Do not modify another project or repository.
-- Framework: Other; root directory: `site`; build/install commands: none; output: `.` (or deploy the site's static files directly). `site/vercel.json` contains clean URL and security-header configuration.
+- Framework: Other. Prefer repository root with `vercel.json` (install `npm --prefix site ci --include=dev --ignore-scripts --no-audit --no-fund`, build `npm run build`, output `site/public`). Alternatively select Root Directory `site` with its own config, output `public`. Both have a Function entry for `/api/stats`; use Node.js 24.
 - Intended production Git branch after human release review: main. Contributor branches get previews only. Do not connect broad repository access or expose secrets.
 
 ## Current blocker
@@ -20,7 +20,7 @@ The Vercel connector returned 403 forbidden on project creation on 26 October 20
 1. Confirm the new project/team and source revision. Create only this project through a permitted route; no paid upgrades.
 2. Obtain the actual assigned production hostname. Configure all SEO URLs with `scripts/configure_site.py` using that exact HTTPS origin.
 3. Run `python3 scripts/check_site.py`; verify desktop/mobile routes, mascot loading, keyboard navigation, GitHub metrics unavailable state and external links.
-4. Deploy the static directory. Poll deployment until READY or a terminal failure; inspect build logs on failure.
+4. Deploy the static output and Function. Poll deployment until READY or a terminal failure; inspect build logs on failure.
 5. Open the actual public production URL, all routes, `/robots.txt`, `/sitemap.xml` and the social image without authentication. Canonical host and sitemap must match; production must be indexable.
 6. Record actual project ID, deployment ID, commit SHA, verification time and URL. Update README/site links only to a verified live URL. Mark Git integration, Search Console and automated releases pending until configured.
 

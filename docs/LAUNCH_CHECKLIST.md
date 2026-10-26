@@ -27,7 +27,6 @@ Tick these in order. Replace every `{{PLACEHOLDER}}` first:
 
 ## 3. Launch day
 
-- [ ] Post outreach messages (docs/OUTREACH.md), staggered through the day
 - [ ] Show HN / Reddit / Product Hunt only after the site and example agents work
 - [ ] Be online for the first 6 hours to answer issues and PRs fast
 - [ ] Welcome every first PR by name
