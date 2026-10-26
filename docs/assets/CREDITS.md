@@ -5,3 +5,5 @@
 - Site layout, copy, CSS and favicon: original work prepared with OpenAI Codex; system fonts only; no external tracking scripts or stock photography.
 
 The mascot is project identity, not evidence of affiliation. Do not imply endorsement or trademark clearance. Code license terms remain in the repository LICENSE. Retain this provenance when reusing the asset.
+
+- `foa-family.png` and `site/assets/foa-family.webp`: original eight-companion family illustration generated with OpenAI image generation using the project mascot as a reference. These depict proposed roles, not implemented AI agents. Browser-size WebP encoded with Pillow.
