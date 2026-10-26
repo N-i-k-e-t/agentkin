@@ -29,3 +29,7 @@ The old GitHub Pages workflow in `.github/workflows/site.yml` is retained as an 
 ## Security and change control
 
 Never share tokens in chat or commit `.vercel`, `.env`, credentials or private contact records. Keep public metrics tokenless with a visible unavailable state. Main/develop need the protection specification in BRANCHING.md; settings are not claimed active until verified. No self-approval, self-merge, force pushes or deleting repos. Rename approval does not grant new maintainers admin rights.
+
+## Current production
+
+The public landing page is https://foa-agents.vercel.app/. The initial launch promotes a checked `docs/foa-launch` build without merging its PR. Future releases should follow human review into `develop` and then `main`; the Vercel production Git branch remains `main`.

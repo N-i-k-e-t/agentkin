@@ -10,7 +10,7 @@ The public presentation remains static HTML and CSS. Browser JavaScript is gener
 | `site/src/family.ts` | Eight role definitions and truthful availability labels | Build-time cards and browser interaction |
 | `site/src/contracts.ts` | Shared response and member types | Frontend and backend |
 | `site/assets/site.js`, `family.js`, `contracts.js`, `stats-service.js` | Generated browser-ready JavaScript | HTML module script |
-| `site/api/stats.ts` | Vercel GET handler; POST returns 405 | Fixed-repository stats service |
+| `site/server/stats-handler.ts` (source), `site/api/stats.ts` (generated) | Vercel GET handler; POST returns 405 | Fixed-repository stats service |
 | `site/lib/stats.ts` | Validated public GitHub requests; partial-feed handling | GitHub public repository, contributor and commit endpoints |
 | `api/stats.ts` | Repository-root deployment entry | Re-exports the shared site API handler |
 | `site/dev/server.mjs` | Local HTTP server for static pages and the same API | Both frontend and backend on one local origin |
@@ -49,3 +49,5 @@ The GET response has short browser caching and five-minute Vercel CDN caching. C
 ## Source naming and review
 
 Use Family of AI Agents / FOA Agents and repository slug `foa-agents`. The default integration branch is develop; human review is required before the feature PR merges. Protected policy files are not modified by this change. Documentation and API tests do not establish an agent runtime or model compatibility.
+
+The build generates self-contained TypeScript function entry points at both supported roots. This avoids runtime imports of TypeScript paths that Vercel transpiles or omits. The entries share the tested contracts, validation service and handler source.
