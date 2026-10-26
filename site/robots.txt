@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://foa-agents.vercel.app/sitemap.xml

@@ -1,4 +1,4 @@
-# Contributing to AgentKin
+# Contributing to Family of AI Agents (FOA Agents)
 
 Thanks for building this with us. Your name, avatar and commits appear on the live site once your first PR is merged.
 

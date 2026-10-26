@@ -13,12 +13,12 @@ A launch video of **60 seconds** (plus a 15-second cut for social). Baseline mea
 
 | Time | Visual | Voice-over | On-screen text |
 |---|---|---|---|
-| 0:00-0:05 | Logo mark pops in, cream background | "AI agents shouldn't be built alone." | AgentKin |
+| 0:00-0:05 | Logo mark pops in, cream background | "AI agents shouldn't be built alone." | Family of AI Agents (FOA Agents) |
 | 0:05-0:15 | Family group shot, each member waves in | "Meet the family. Each one has one job." | Agents · Tools · Integrations |
 | 0:15-0:27 | Architecture diagram animates: integration -> tool -> agent | "Integrations connect. Tools act. Agents decide." | Plug in. Build. Share. |
 | 0:27-0:40 | Screen recording: fork, branch, PR | "Pick an issue, open a pull request." | good-first-issue |
 | 0:40-0:50 | Live site: contributor wall, star wall, commit feed updating | "Merge, and your name goes live on our site." | Your name. Live. |
-| 0:50-0:58 | Conductor character points to camera | "Come build with us." | github.com/N-i-k-e-t/agentkin |
+| 0:50-0:58 | Conductor character points to camera | "Come build with us." | github.com/N-i-k-e-t/foa-agents |
 | 0:58-1:00 | End card with logo and URL | | |
 
 15-second cut: 0:00 hook, family, live wall, call to action.
