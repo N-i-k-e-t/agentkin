@@ -19,5 +19,8 @@
         }
       ]
     }
-  ]
+  ],
+  "framework": null,
+  "buildCommand": "npm run typecheck && npm run build",
+  "outputDirectory": "public"
 }
