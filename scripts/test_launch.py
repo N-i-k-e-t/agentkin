@@ -14,7 +14,7 @@ class LaunchTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name) / 'kit'
-        shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+        shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns('.git', '__pycache__', 'node_modules', 'public', '.openai'))
 
     def run_launch(self, *extra):
         return subprocess.run(['bash', 'scripts/go_live.sh', 'N-i-k-e-t', 'foa-agents',

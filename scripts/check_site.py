@@ -36,7 +36,7 @@ class Page(HTMLParser):
 
 titles = set()
 errors = []
-pages = list(ROOT.rglob('*.html'))
+pages = [p for p in ROOT.rglob('*.html') if not any(part in {'public', 'node_modules'} for part in p.relative_to(ROOT).parts)]
 for path in pages:
     page = Page()
     page.feed(path.read_text())

@@ -16,6 +16,7 @@ def configure(origin):
     origin = origin.rstrip('/')
     urls = []
     for path in sorted(ROOT.rglob('*.html')):
+        if any(part in {'public', 'node_modules'} for part in path.relative_to(ROOT).parts): continue
         text = path.read_text()
         text = re.sub(r'<link rel="canonical"[^>]*>', '', text)
         text = re.sub(r'<meta property="og:(?:url|image)"[^>]*>', '', text)
