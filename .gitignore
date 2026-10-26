@@ -6,3 +6,7 @@ node_modules/
 __pycache__/
 *.log
 dist/
+
+# Reproducible build output and local-only operations
+site/public/
+internal/

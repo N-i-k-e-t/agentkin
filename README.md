@@ -10,8 +10,6 @@ An MIT-licensed community project for modular agents, reusable tools and service
 
 - [Start contributing](CONTRIBUTING.md)
 - [Branch and release guide](docs/BRANCHING.md)
-- [Outreach playbook](docs/OUTREACH.md)
-- [Community targets and verified rules](docs/outreach/CHANNELS.md)
 - [Student contributor pathway](docs/IMMERSION.md)
 - [Vercel site and SEO runbook](docs/DEPLOYMENT.md)
 
@@ -23,7 +21,7 @@ An MIT-licensed community project for modular agents, reusable tools and service
 | `tools/` | One reusable typed capability | Contribution contract |
 | `integrations/` | Auth, rate limits, retries and external access | Contract template |
 | `data/` | Public, licensed samples and evaluations | Data policy |
-| `site/` | Responsive public website, mascot and guides | Static source, prepared for Vercel |
+| `site/` | HTML/CSS frontend, TypeScript source, generated JavaScript, read-only stats API and guides | Static source, prepared for Vercel |
 
 ## Start locally
 
@@ -33,10 +31,12 @@ cd foa-agents
 git checkout develop
 git switch -c docs/your-small-improvement
 python3 -m unittest discover -s scripts -p 'test_launch.py' -v
-python3 -m http.server 8000 --directory site
+npm --prefix site ci
+npm run build
+npm run dev
 ```
 
-Open http://localhost:8000 for the website. Contracts are starting points, not executable agents. No API keys are required to preview the site or run launch tests. If a future integration requires credentials, keep them in an ignored local environment file.
+Open http://localhost:4173 for the website and connected read-only API. Contracts are starting points, not executable agents. No API keys are required to preview the site or run launch tests. Node.js 24 is required for the typed local backend. If a future integration requires credentials, keep them in an ignored local environment file.
 
 ## Propose → build → review
 
@@ -46,8 +46,14 @@ For substantial work, open a proposal and wait for `approved-to-build`. Branch f
 
 ## Project honesty
 
-No fake stars, users, benchmarks, partnerships or testimonials. External projects mentioned in our outreach research are prospective communities, not partners. Website metrics use GitHub's public API and show an unavailable state on failure.
+No fake stars, users, benchmarks, partnerships or testimonials. Website metrics use GitHub's public API and show an unavailable state on failure.
 
 ## License and credits
 
 Code and repository content: [MIT](LICENSE), with original terms retained. The original Foa mascot was generated with OpenAI image generation; see [asset credits](docs/assets/CREDITS.md). Brand identity is not an endorsement by any framework or model provider.
+
+## Connected application files
+
+See [the frontend/backend map](docs/ARCHITECTURE.md). The presentation is static HTML/CSS with browser JavaScript generated from TypeScript. A read-only Vercel Function fetches actual public GitHub metrics and feeds; it is not an AI-agent execution backend. The interactive family shows proposed roles and their contract boundaries.
+
+<img src="docs/assets/foa-family.png" width="1000" alt="Original FOA companion family, illustrating proposed agent roles">
